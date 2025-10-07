@@ -5,6 +5,7 @@ import { ReduxThemeProvider } from './components/ReduxThemeProvider'
 import { store } from './store'
 import Router from './router'
 import './index.css'
+import 'leaflet/dist/leaflet.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
