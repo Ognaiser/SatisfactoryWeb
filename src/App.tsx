@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Box, Toolbar } from '@mui/material'
-import { useDrawerState, useDrawerClose } from './store/hooks'
+import { useAppSelector, useAppDispatch } from './store/hooks'
+import { closeDrawer } from './store/slices/drawerSlice'
 import AppBar from './components/AppBar'
 import NavigationDrawer from './components/NavigationDrawer'
 import './App.css'
@@ -8,8 +9,10 @@ import './App.css'
 const drawerWidth = 280
 
 function App() {
-  const isDrawerOpen = useDrawerState()
-  const closeDrawer = useDrawerClose()
+  const isDrawerOpen = useAppSelector((state) => state.drawer.isOpen)
+  const dispatch = useAppDispatch()
+  
+  const handleCloseDrawer = () => dispatch(closeDrawer())
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -19,7 +22,7 @@ function App() {
       {/* Navigation Drawer */}
       <NavigationDrawer 
         open={isDrawerOpen}
-        onClose={closeDrawer}
+        onClose={handleCloseDrawer}
         width={drawerWidth}
       />
 

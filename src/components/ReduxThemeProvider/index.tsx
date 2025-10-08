@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
-import type { RootState, AppDispatch } from '../store'
-import { setTheme } from '../store/slices/themeSlice'
+import type { RootState, AppDispatch } from '../../store'
+import { setTheme } from '../../store/slices/themeSlice'
 
 interface ReduxThemeProviderProps {
   children: ReactNode
