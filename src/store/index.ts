@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterSlice from './slices/counterSlice'
 import themeSlice from './slices/themeSlice'
 import drawerSlice from './slices/drawerSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice,
     theme: themeSlice,
     drawer: drawerSlice,
   },

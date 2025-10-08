@@ -54,7 +54,7 @@ export default function Login() {
           {/* Logo and Title */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <img 
-              src="/logo.svg" 
+              src="/logo.png" 
               alt="Satisfactory Tour Logo" 
               style={{ height: '48px', width: 'auto', marginBottom: '16px' }}
             />

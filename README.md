@@ -24,8 +24,10 @@ src/
 │   └── index.tsx       # Router setup and route definitions
 ├── store/              # Redux store configuration
 │   ├── index.ts        # Store setup and type definitions
+│   ├── hooks.ts        # Typed Redux hooks
 │   └── slices/         # Redux Toolkit slices
-│       └── counterSlice.ts # Example counter slice
+│       ├── themeSlice.ts   # Theme state management
+│       └── drawerSlice.ts  # Navigation drawer state management
 ├── styles/             # CSS and styling files
 ├── types/              # TypeScript type definitions
 ├── App.tsx             # Main App component
@@ -94,6 +96,66 @@ pnpm format
 - 📏 ESLint + Prettier for code quality
 - 🏗️ Modern project structure
 - 📦 pnpm for efficient package management
+- 🗺️ Leaflet for interactive mapping capabilities
+- 🎨 Material-UI for modern component design system
+
+## Leaflet Integration
+
+This project uses Leaflet for interactive mapping features, specifically for Satisfactory game world visualization:
+
+### Key Libraries
+- **[Leaflet](https://leafletjs.com/)** v1.9.4 - Core mapping library
+- **[React-Leaflet](https://react-leaflet.js.org/)** v4.2.1 - React components for Leaflet
+
+### Usage Example
+```tsx
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+
+function InteractiveMap() {
+  return (
+    <MapContainer 
+      center={[0, 0]} 
+      zoom={2} 
+      style={{ height: '400px', width: '100%' }}
+    >
+      <TileLayer url="/path/to/satisfactory/tiles/{z}/{x}/{y}.png" />
+      <Marker position={[100, 200]}>
+        <Popup>Factory Location</Popup>
+      </Marker>
+    </MapContainer>
+  )
+}
+```
+
+### Setup Requirements
+1. Import Leaflet CSS in your main.tsx:
+```tsx
+import 'leaflet/dist/leaflet.css'
+```
+
+2. Configure marker icons (Leaflet requires manual icon setup in bundled environments):
+```tsx
+import L from 'leaflet'
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
+// Fix for default markers in bundled environments
+delete (L.Icon.Default.prototype as any)._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+})
+```
+
+### Features Supported
+- Interactive game world navigation
+- Custom tile layers for Satisfactory maps
+- Factory location markers and popups
+- Zoom and pan controls
+- Responsive map sizing
+- Integration with Redux for state management
 
 ## Development Guidelines
 

@@ -31,19 +31,69 @@ export const ReduxThemeProvider = ({ children }: ReduxThemeProviderProps) => {
   const theme = createTheme({
     palette: {
       mode,
-      primary: {
-        main: mode === 'light' ? '#1976d2' : '#90caf9',
-      },
-      secondary: {
-        main: mode === 'light' ? '#dc004e' : '#f48fb1',
-      },
-      background: {
-        default: mode === 'light' ? '#fafafa' : '#121212',
-        paper: mode === 'light' ? '#ffffff' : '#1e1e1e',
-      },
+      ...(mode === 'dark'
+        ? {
+            // 🌑 DARK MODE
+            primary: {
+              main: '#ff8c42',
+              light: '#ffa867',
+              dark: '#c66a2f',
+            },
+            secondary: {
+              main: '#4cc9f0',
+              light: '#72d4f5',
+              dark: '#3aa7c2',
+            },
+            background: {
+              default: '#1e1e20',
+              paper: '#2a2a2d',
+            },
+            text: {
+              primary: '#f4f4f5',
+              secondary: '#a3a3a8',
+            },
+          }
+        : {
+            // ☀️ LIGHT MODE
+            primary: {
+              main: '#e6752c',
+              light: '#ff984f',
+              dark: '#a7521c',
+            },
+            secondary: {
+              main: '#3a9bdc',
+              light: '#6fc4f2',
+              dark: '#2b79ad',
+            },
+            background: {
+              default: '#f5f5f7',
+              paper: '#ffffff',
+            },
+            text: {
+              primary: '#1a1a1c',
+              secondary: '#55565a',
+            },
+          }),
+      success: { main: '#8be78b' },
+      warning: { main: '#ffb347' },
+      error: { main: '#ff5c5c' },
+      info: { main: '#5ec6f3' },
     },
     typography: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: "'Orbitron', 'Rajdhani', 'Roboto', sans-serif",
+      h1: { fontWeight: 700, letterSpacing: 1 },
+      h2: { fontWeight: 600, letterSpacing: 0.5 },
+      button: { textTransform: 'none', fontWeight: 600 },
+    },
+    shape: { borderRadius: 12 },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundImage: 'none',
+          },
+        },
+      },
     },
   })
 
