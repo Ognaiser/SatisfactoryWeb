@@ -37,20 +37,35 @@ A modern React TypeScript application for Satisfactory game planning and tour ma
 ```
 src/
 ├── components/              # Reusable UI components
-│   ├── AppBreadcrumbs.tsx  # Navigation breadcrumb component
-│   ├── ReduxThemeProvider.tsx # Theme context provider with Redux integration
-│   └── ThemeToggle.tsx     # Dark/light mode toggle button
+│   ├── AppBar/             # Application bar component
+│   │   ├── index.tsx       # Main AppBar component + export
+│   │   ├── AppBar.d.ts     # Type definitions
+│   │   └── UserMenu.tsx    # Supporting component
+│   ├── AppBreadcrumbs/     # Navigation breadcrumb component
+│   │   └── index.tsx       # Main component + export
+│   ├── NavigationDrawer/   # Navigation drawer component
+│   │   └── index.tsx       # Main component + export
+│   ├── ReduxThemeProvider/ # Theme context provider with Redux integration
+│   │   └── index.tsx       # Main component + export
+│   └── ThemeToggle/        # Dark/light mode toggle button
+│       └── index.tsx       # Main component + export
 ├── pages/                  # Route-specific page components
-│   ├── About.tsx           # About page with project information
-│   ├── Home.tsx            # Landing/home page
-│   ├── Login.tsx           # User authentication page
-│   ├── Settings.tsx        # Application settings and user preferences
+│   ├── about/              # About page
+│   │   └── index.tsx       # Main page + export
+│   ├── home/               # Landing/home page
+│   │   └── index.tsx       # Main page + export
+│   ├── login/              # User authentication page
+│   │   └── index.tsx       # Main page + export
+│   ├── settings/           # Application settings and user preferences
+│   │   └── index.tsx       # Main page + export
 │   ├── calculator/         # Calculator feature pages
-│   │   ├── Advanced.tsx    # Advanced calculator functionality
-│   │   └── Simple.tsx      # Simple calculator interface
-│   └── Map/                # Interactive map components
-│       ├── index.tsx       # Map page layout and routing
-│       └── InteractiveMap.tsx # Leaflet-based interactive map
+│   │   ├── advanced/       # Advanced calculator functionality
+│   │   │   └── index.tsx   # Main page + export
+│   │   └── simple/         # Simple calculator interface
+│   │       └── index.tsx   # Main page + export
+│   └── map/                # Interactive map page
+│       ├── index.tsx       # Main page + export
+│       └── InteractiveMap.tsx # Supporting component
 ├── router/                 # React Router configuration
 │   └── index.tsx           # Router setup and route definitions
 ├── store/                  # Redux store configuration
@@ -58,10 +73,108 @@ src/
 │   ├── hooks.ts            # Typed Redux hooks (useAppSelector, useAppDispatch)
 │   └── slices/             # Redux Toolkit slices
 │       ├── drawerSlice.ts  # Navigation drawer state management
-│       └── themeSlice.ts   # Theme mode state management
+│       ├── themeSlice.ts   # Theme mode state management
+│       └── userSlice.ts    # User state management
 ├── assets/                 # Static assets
 └── App.tsx                 # Main application component with layout
 ```
+
+### Folder Structure Rules
+
+#### Components (`src/components/`)
+All reusable components must follow this structure:
+
+**Component Folder Naming**: Use **PascalCase** for component folder names
+```
+components/
+└── ComponentName/          # PascalCase folder name
+    ├── index.tsx           # Main component + default export
+    ├── ComponentName.d.ts  # Type definitions (interfaces, types, props)
+    ├── SupportingComponent.tsx  # Single small supporting component (same file)
+    └── ComplexSubComponent/     # Multiple/complex supporting components (subfolder)
+        ├── index.tsx
+        └── ComplexSubComponent.d.ts
+```
+
+**Component File Structure**:
+- `index.tsx`: Contains the main component implementation and must include the default export
+- `ComponentName.d.ts`: Contains all TypeScript type definitions, interfaces, and prop types
+- Supporting components:
+  - **Single small component**: Create `SupportingComponent.tsx` in the same folder
+  - **Multiple or complex components**: Create a subfolder following the same component rules
+
+**Example Component Structure**:
+```
+components/
+├── AppBar/
+│   ├── index.tsx           # Main AppBar component
+│   ├── AppBar.d.ts         # AppBarProps, MenuItemType, etc.
+│   └── UserMenu.tsx        # Small supporting component
+└── DataTable/
+    ├── index.tsx           # Main DataTable component
+    ├── DataTable.d.ts      # DataTableProps, ColumnDefinition, etc.
+    ├── TableHeader/        # Complex supporting component
+    │   ├── index.tsx
+    │   └── TableHeader.d.ts
+    └── TableRow/           # Complex supporting component
+        ├── index.tsx
+        └── TableRow.d.ts
+```
+
+#### Pages (`src/pages/`)
+All page components must follow this structure:
+
+**Page Folder Naming**: Use **snake_case** for page folder names
+```
+pages/
+└── page_name/              # snake_case folder name
+    ├── index.tsx           # Main page component + default export
+    ├── PageComponent/      # Supporting components (follow component rules)
+    │   ├── index.tsx
+    │   └── PageComponent.d.ts
+    └── SubPage/            # Sub-pages/routes (follow page rules)
+        └── index.tsx
+```
+
+**Page File Structure**:
+- `index.tsx`: Contains the main page implementation and must include the default export
+- Supporting components: Create component folders following the **component folder rules** (PascalCase)
+- Sub-pages: Create page folders following the **page folder rules** (snake_case)
+
+**Example Page Structure**:
+```
+pages/
+├── home/
+│   └── index.tsx           # Simple page, no supporting components
+├── login/
+│   └── index.tsx           # Simple page
+├── calculator/
+│   ├── advanced/           # Sub-page
+│   │   └── index.tsx
+│   └── simple/             # Sub-page
+│       └── index.tsx
+└── map/
+    ├── index.tsx           # Main map page
+    └── InteractiveMap.tsx  # Single supporting component
+```
+
+#### Key Rules Summary
+1. **Components**: Always use **PascalCase** for folder names
+2. **Pages**: Always use **snake_case** for folder names
+3. **Main Files**: Always named `index.tsx` with default export
+4. **Type Files**: Named `ComponentName.d.ts` for type definitions
+5. **Supporting Components**:
+   - Small/single: `SupportingComponent.tsx` in same folder
+   - Complex/multiple: Create subfolder with full component structure
+6. **Imports**: Always import from the folder, not the index file directly
+   ```tsx
+   // Correct
+   import AppBar from '../components/AppBar'
+   import Home from '../pages/home'
+   
+   // Incorrect
+   import AppBar from '../components/AppBar/index'
+   ```
 
 ## Development Guidelines
 
@@ -82,12 +195,6 @@ src/
 - **Theme Integration**: Leverage MUI theme tokens for consistent spacing, colors, and typography
 - **Responsive Values**: Use responsive values in sx prop: `sx={{ p: { xs: 1, md: 2 } }}`
 - **Theme-Aware Styling**: Implement theme mode-dependent styling for dark/light modes
-
-### Routing & Navigation
-- **React Router v6**: Use modern React Router v6 syntax and patterns
-- **Nested Routes**: Implement nested routing with layout wrappers
-- **Navigation Components**: Use MUI navigation components (Drawer, AppBar, Breadcrumbs)
-- **Route-based Code Splitting**: Consider lazy loading for page components
 
 ### Import Organization
 ```tsx
@@ -197,7 +304,7 @@ pnpm add -D <pkg> # Add development dependency
 ## Project Context
 This is a Satisfactory game planning application that includes:
 - Interactive game world mapping capabilities
-- Production planning calculators (simple and advanced)
+- Production planning calculators
 - User authentication and settings management
 - Responsive design for desktop and mobile use
 - Modern React/TypeScript development patterns

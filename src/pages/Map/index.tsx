@@ -1,5 +1,5 @@
 import { Typography, Paper, Box } from '@mui/material'
-import InteractiveMap from './InteractiveMap'
+import InteractiveMap from './V2InteractiveMap'
 
 const MapPage = () => {
   return (
