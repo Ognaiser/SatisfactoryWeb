@@ -1,8 +1,9 @@
-import { useEffect } from "react";
-import { LatLngBounds, LatLngExpression } from "leaflet";
+import { useEffect, useState } from "react";
+import { LatLng, LatLngBounds, LatLngExpression } from "leaflet";
 import {
   MapContainer,
   useMap,
+  useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -112,7 +113,26 @@ function SatisfactoryTiles() {
   return null;
 }
 
+type MouseCoordinateTrackerProps = {
+  onPositionChange: (position: LatLng | null) => void;
+};
+
+function MouseCoordinateTracker({ onPositionChange }: MouseCoordinateTrackerProps) {
+  useMapEvents({
+    mousemove(event) {
+      onPositionChange(event.latlng);
+    },
+    mouseout() {
+      onPositionChange(null);
+    },
+  });
+
+  return null;
+}
+
 const V2InteractiveMap: React.FC = () => {
+  const [hoverPosition, setHoverPosition] = useState<LatLng | null>(null);
+
   return (
     <div style={{
       width: "100%",
@@ -138,7 +158,22 @@ const V2InteractiveMap: React.FC = () => {
         zoomControl
       >
         <SatisfactoryTiles />
+        <MouseCoordinateTracker onPositionChange={setHoverPosition} />
       </MapContainer>
+      <div
+        style={{
+          padding: "8px 12px",
+          background: "#1c1c1c",
+          color: "#f1f1f1",
+          fontFamily: "monospace",
+          fontSize: "0.875rem",
+          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+        }}
+      >
+        {hoverPosition
+          ? `Lat: ${hoverPosition.lat.toFixed(3)}  Lng: ${hoverPosition.lng.toFixed(3)}`
+          : "Hover over the map to see coordinates"}
+      </div>
     </div>
   );
 };

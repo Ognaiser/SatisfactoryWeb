@@ -5,6 +5,7 @@ const MapPage = () => {
   return (
     <Box
       sx={{
+        pt: { xs: 2, md: 4 },
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
