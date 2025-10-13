@@ -32,11 +32,16 @@ function App() {
         sx={{
           flexGrow: 1,
           bgcolor: 'background.default',
-          minHeight: '100vh',
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
         }}
       >
         <Toolbar sx={{ minHeight: { xs: 64, sm: 70 } }} />
-        <Outlet />
+        <Box sx={{ flexGrow: 1, display: 'flex', minHeight: 0 }}>
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   )

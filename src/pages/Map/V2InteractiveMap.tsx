@@ -114,14 +114,21 @@ function SatisfactoryTiles() {
 
 const V2InteractiveMap: React.FC = () => {
   return (
-    <div style={{ width: "100%", height: "100vh", background: "#111" }}>
+    <div style={{
+      width: "100%",
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      minHeight: 0,
+      background: "#111",
+    }}>
       <MapContainer
         center={mapCenter}
         zoom={MIN_ZOOM}
         minZoom={MIN_ZOOM}
         maxZoom={MAX_ZOOM}
         crs={satisfactoryCRS}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", flex: 1, height: "100%" }}
         maxBounds={mapBounds}
         maxBoundsViscosity={1.0}
         zoomSnap={1}
